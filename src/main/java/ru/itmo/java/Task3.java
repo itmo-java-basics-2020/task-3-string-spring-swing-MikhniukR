@@ -34,10 +34,10 @@ public class Task3 {
         if(inputArray.length == 1) {
             return inputArray[0];
         }
-        int max1 = 0;
-        int max2 = 0;
-        int min1 = 0;
-        int min2 = 0;
+        int max1 = Integer.MIN_VALUE;
+        int max2 = Integer.MIN_VALUE;
+        int min1 = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
 
         for(int x : inputArray) {
             if(x > max1) {
