@@ -8,7 +8,15 @@ public class Task3 {
      * Если инпут равен null - вернуть пустой массив
      */
     int[] getShiftedArray(int[] inputArray) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(inputArray == null) {
+            return new int[]{};
+        }
+        for(int i = inputArray.length - 1; i > 0; i--) {
+            int tmp = inputArray[i];
+            inputArray[i] = inputArray[i - 1];
+            inputArray[i - 1] = tmp;
+        }
+        return inputArray;
     }
 
     /**
@@ -20,7 +28,36 @@ public class Task3 {
      * Пример: 2 4 6 -> 24
      */
     int getMaxProduct(int[] inputArray) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(inputArray == null || inputArray.length == 0) {
+            return 0;
+        }
+        if(inputArray.length == 1) {
+            return inputArray[0];
+        }
+        int max1 = Integer.MIN_VALUE;
+        int max2 = Integer.MIN_VALUE;
+        int min1 = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
+
+        for(int x : inputArray) {
+            if(x > max1) {
+                max2 = max1;
+                max1 = x;
+            }
+            else if(x > max2) {
+                max2 = x;
+            }
+
+            if(x < min1) {
+                min2 = min1;
+                min1 = x;
+            }
+            else if(x < min2) {
+                min2 = x;
+            }
+        }
+
+        return Math.max(max1 * max2, min1 * min2);
     }
 
     /**
@@ -31,14 +68,32 @@ public class Task3 {
      * Пример: acbr -> 50
      */
     int getABpercentage(String input) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(input == null || input.length() == 0) {
+            return 0;
+        }
+        int cnt = 0;
+        for(char c : input.toUpperCase().toCharArray()) {
+            if(c == 'A' || c == 'B') {
+                cnt++;
+            }
+        }
+
+        return cnt * 100 / input.length();
     }
 
     /**
      * Напишите функцию, которая определяет, является ли входная строка палиндромом
      */
     boolean isPalindrome(String input) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(input == null) {
+            return false;
+        }
+        for(int l = 0, r = input.length() - 1; l < r; l++, r--) {
+            if(input.charAt(l) != input.charAt(r)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -46,7 +101,22 @@ public class Task3 {
      * где группы одинаковых символов заменены на один символ и кол-во этих символов идущих подряд в строке
      */
     String getEncodedString(String input) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(input == null || input.length() == 0) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        int cnt = 1;
+        for(int i = 1; i < input.length(); i++) {
+            if(input.charAt(i) != input.charAt(i - 1)) {
+                result.append(input.charAt(i - 1));
+                result.append(cnt);
+                cnt = 0;
+            }
+            cnt++;
+        }
+        result.append(input.charAt(input.length() - 1));
+        result.append(cnt);
+        return result.toString();
     }
 
     /**
@@ -57,7 +127,27 @@ public class Task3 {
      * isPermutation("abc", "Abc") == false;
      */
     boolean isPermutation(String one, String two) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(one == null || two == null || one.length() == 0 || two.length() == 0 || one.length() != two.length()) {
+            return false;
+        }
+        int[] cnt = new int[Character.MAX_VALUE + 1];
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
+            cnt[i] = 0;
+        }
+
+        for(char c : one.toCharArray()) {
+            cnt[c]++;
+        }
+        for(char c : two.toCharArray()) {
+            cnt[c]--;
+        }
+
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
+            if(cnt[i] != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -66,7 +156,24 @@ public class Task3 {
      * Строкой является последовательность символов длинной N, где N > 0
      */
     boolean isUniqueString(String s) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(s == null || s.length() == 0) {
+            return false;
+        }
+        int[] cnt = new int[Character.MAX_VALUE + 1];
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
+            cnt[i] = 0;
+        }
+
+        for(char c : s.toCharArray()) {
+            cnt[c]++;
+        }
+
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
+            if(cnt[i] > 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -75,7 +182,17 @@ public class Task3 {
      * Если входной массив == null - вернуть пустой массив
      */
     int[][] matrixTranspose(int[][] m) {
-        throw new UnsupportedOperationException(); // TODO solve
+        if(m == null || m.length == 0) {
+            return new int[][]{{}, {}};
+        }
+        for(int i = 0; i < m.length; i++) {
+            for(int j = 0; j < i && j < m[i].length; j++) {
+                int tmp = m[i][j];
+                m[i][j] = m[j][i];
+                m[j][i] = tmp;
+            }
+        }
+        return m;
     }
 
     /**
@@ -88,13 +205,45 @@ public class Task3 {
      * Если исходный массив == null -  вернуть пустую строку
      */
     String concatWithSeparator(String[] inputStrings, Character separator) {
-        return null; // TODO solve
+        if(inputStrings == null) {
+            return "";
+        }
+        if(separator == null) {
+            separator = ' ';
+        }
+        StringBuilder result = new StringBuilder();
+        for(String s : inputStrings) {
+            result.append(s);
+            result.append(separator);
+        }
+        if(result.length() > 0) {
+            result.deleteCharAt(result.length() - 1);
+        }
+        return result.toString();
     }
 
     /**
      * Напишите функцию, принимающую массив строк и строку-перфикс и возвращающую кол-во строк массива с данным префиксом
      */
     int getStringsStartWithPrefix(String[] inputStrings, String prefix) {
-        return 0; // TODO solve
+        if(inputStrings == null || prefix == null) {
+            return 0;
+        }
+        int result = 0;
+
+        for(String s : inputStrings) {
+            boolean match = true;
+            for(int i = 0; i < prefix.length(); i++) {
+                if(s.charAt(i) != prefix.charAt(i)) {
+                    match = false;
+                    break;
+                }
+            }
+            if(match) {
+                result++;
+            }
+        }
+
+        return result;
     }
 }
