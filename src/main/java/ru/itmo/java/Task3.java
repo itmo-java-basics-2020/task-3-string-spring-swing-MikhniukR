@@ -130,8 +130,8 @@ public class Task3 {
         if(one == null || two == null || one.length() == 0 || two.length() == 0 || one.length() != two.length()) {
             return false;
         }
-        int[] cnt = new int[256];
-        for(int i = 0; i < 256; i++) {
+        int[] cnt = new int[Character.MAX_VALUE + 1];
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
             cnt[i] = 0;
         }
 
@@ -142,7 +142,7 @@ public class Task3 {
             cnt[c]--;
         }
 
-        for(int i = 0; i < 256; i++) {
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
             if(cnt[i] != 0) {
                 return false;
             }
@@ -159,8 +159,8 @@ public class Task3 {
         if(s == null || s.length() == 0) {
             return false;
         }
-        int[] cnt = new int[256];
-        for(int i = 0; i < 256; i++) {
+        int[] cnt = new int[Character.MAX_VALUE + 1];
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
             cnt[i] = 0;
         }
 
@@ -168,7 +168,7 @@ public class Task3 {
             cnt[c]++;
         }
 
-        for(int i = 0; i < 256; i++) {
+        for(int i = 0; i <= Character.MAX_VALUE; i++) {
             if(cnt[i] > 1) {
                 return false;
             }
